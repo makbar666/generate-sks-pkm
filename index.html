@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create PDF</title>
+    <!-- Include pdfmake -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <!-- Include Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="max-w-3xl mx-auto p-6 space-y-10">
+      <h2 class="text-2xl font-bold mb-6">Create PDF</h2>
+
+      <div class="grid space-y-2">
+        <h1 class="font-semibold">Data Faskes</h1>
+
+        <div class="mb-4">
+          <label for="cityName" class="block text-gray-700 mb-2"
+            >Nama Kota/Kabupaten:</label
+          >
+          <input
+            type="text"
+            id="cityName"
+            name="cityName"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="puskesmasName" class="block text-gray-700 mb-2"
+            >Nama Puskesmas:</label
+          >
+          <input
+            type="text"
+            id="puskesmasName"
+            name="puskesmasName"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="address" class="block text-gray-700 mb-2">Alamat:</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="phone" class="block text-gray-700 mb-2">No Telp:</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+      </div>
+      <div class="grid space-y-2">
+        <h1 class="font-semibold">Data Pasien</h1>
+
+        <div class="mb-4">
+          <label for="patientName" class="block text-gray-700 mb-2"
+            >Nama:</label
+          >
+          <input
+            type="text"
+            id="patientName"
+            name="patientName"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="age" class="block text-gray-700 mb-2">Umur:</label>
+          <input
+            type="number"
+            id="age"
+            name="age"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="patientAddress" class="block text-gray-700 mb-2"
+            >Alamat:</label
+          >
+          <input
+            type="text"
+            id="patientAddress"
+            name="patientAddress"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="occupation" class="block text-gray-700 mb-2"
+            >Pekerjaan:</label
+          >
+          <input
+            type="text"
+            id="occupation"
+            name="occupation"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="diagnosis" class="block text-gray-700 mb-2"
+            >Diagnosa:</label
+          >
+          <input
+            type="text"
+            id="diagnosis"
+            name="diagnosis"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="gender" class="block text-gray-700 mb-2"
+            >Jenis Kelamin:</label
+          >
+          <select
+            id="gender"
+            name="gender"
+            class="w-full p-2 border rounded-md"
+          >
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label for="startDate" class="block text-gray-700 mb-2"
+            >Tanggal Mulai:</label
+          >
+          <input
+            type="date"
+            id="startDate"
+            name="startDate"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="endDate" class="block text-gray-700 mb-2"
+            >Tanggal Selesai:</label
+          >
+          <input
+            type="date"
+            id="endDate"
+            name="endDate"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="sickDays" class="block text-gray-700 mb-2"
+            >Jumlah Hari izin:</label
+          >
+          <input
+            type="number"
+            id="sickDays"
+            name="sickDays"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="letterDate" class="block text-gray-700 mb-2"
+            >Tanggal Surat:</label
+          >
+          <input
+            type="date"
+            id="letterDate"
+            name="letterDate"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="letterNumber" class="block text-gray-700 mb-2"
+            >Nomer Surat:</label
+          >
+          <input
+            type="text"
+            id="letterNumber"
+            name="letterNumber"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
+      </div>
+
+      <button
+        onclick="generatePDF()"
+        class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600"
+      >
+        Generate PDF
+      </button>
+
+      <!-- PDF Preview -->
+      <iframe
+        id="pdfPreview"
+        class="w-full h-[500px] border border-gray-300 mt-6 rounded-md"
+      ></iframe>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
