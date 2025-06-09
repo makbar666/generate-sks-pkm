@@ -197,6 +197,117 @@
         </div>
       </div>
 
+      <!-- Tambahkan input file untuk upload gambar -->
+      <div class="grid space-y-2">
+        <h1 class="font-semibold">Upload Gambar</h1>
+
+        <div class="mb-4">
+          <label for="logoUpload" class="block text-gray-700 mb-2"
+            >Logo Kota:</label
+          >
+          <input
+            type="file"
+            id="logoUpload"
+            accept="image/*"
+            class="w-full p-2 border rounded-md"
+            onchange="handleImageUpload(this, 'logoPreview')"
+          />
+          <img id="logoPreview" class="mt-2 h-20" />
+        </div>
+
+        <div class="mb-4">
+          <label for="stempelUpload" class="block text-gray-700 mb-2"
+            >Stempel:</label
+          >
+          <input
+            type="file"
+            id="stempelUpload"
+            accept="image/*"
+            class="w-full p-2 border rounded-md"
+            onchange="handleImageUpload(this, 'stempelPreview')"
+          />
+          <img id="stempelPreview" class="mt-2 h-20" />
+        </div>
+
+        <div class="mb-4">
+          <label for="ttdUpload" class="block text-gray-700 mb-2"
+            >Tanda Tangan:</label
+          >
+          <input
+            type="file"
+            id="ttdUpload"
+            accept="image/*"
+            class="w-full p-2 border rounded-md"
+            onchange="handleImageUpload(this, 'ttdPreview')"
+          />
+          <img id="ttdPreview" class="mt-2 h-20" />
+        </div>
+
+        <button
+          onclick="resetOffset()"
+          class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600"
+        >
+          Reset Offset
+        </button>
+
+        <div class="mb-4">
+          <label for="stempelXOffset" class="block text-gray-700 mb-2"
+            >Offset Horizontal Stempel (px, -50 hingga 50):</label
+          >
+          <input
+            type="number"
+            id="stempelXOffset"
+            name="stempelXOffset"
+            class="w-full p-2 border rounded-md"
+            value="0"
+            min="-50"
+            max="50"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="stempelYOffset" class="block text-gray-700 mb-2"
+            >Offset Vertikal Stempel (px, -50 hingga 50):</label
+          >
+          <input
+            type="number"
+            id="stempelYOffset"
+            name="stempelYOffset"
+            class="w-full p-2 border rounded-md"
+            value="-40"
+            min="-50"
+            max="50"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="ttdXOffset" class="block text-gray-700 mb-2"
+            >Offset Horizontal (Kiri Kanan) TTD (px, -50 hingga 50):</label
+          >
+          <input
+            type="number"
+            id="ttdXOffset"
+            name="ttdXOffset"
+            class="w-full p-2 border rounded-md"
+            value="0"
+            min="-50"
+            max="50"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="ttdYOffset" class="block text-gray-700 mb-2"
+            >Offset Vertikal (Atas Bawah) TTD (px, -50 hingga 140):</label
+          >
+          <input
+            type="number"
+            id="ttdYOffset"
+            name="ttdYOffset"
+            class="w-full p-2 border rounded-md"
+            value="-130"
+            min="-50"
+            max="140"
+          />
+        </div>
+      </div>
+
       <button
         onclick="generatePDF()"
         class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600"

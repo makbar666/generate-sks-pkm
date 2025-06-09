@@ -18,13 +18,48 @@ function getBase64FromImageUrl(url) {
   });
 }
 
+function handleImageUpload(input, previewId) {
+  const file = input.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById(previewId).src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+function resetOffset() {
+  document.getElementById("stempelXOffset").value = 0;
+  document.getElementById("stempelYOffset").value = -40;
+  document.getElementById("ttdXOffset").value = 0;
+  document.getElementById("ttdYOffset").value = -130;
+}
+
 async function generatePDF() {
-  const logoBase64 = await getBase64FromImageUrl(
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Coat_of_Arms_of_City_Makassar.png/500px-Coat_of_Arms_of_City_Makassar.png?20180118184015"
-  );
+  const logoBase64 =
+    document.getElementById("logoPreview").src ||
+    (await getBase64FromImageUrl("/maros.png"));
   const logoPkm = await getBase64FromImageUrl("/logo-puskesmas.png");
-  const stempel = await getBase64FromImageUrl("/stempel.png");
-  const ttd = await getBase64FromImageUrl("/ttd.png");
+  const stempel =
+    document.getElementById("stempelPreview").src ||
+    (await getBase64FromImageUrl("/stempel.png"));
+  const ttd =
+    document.getElementById("ttdPreview").src ||
+    (await getBase64FromImageUrl("/ttd.png"));
+
+  let stempelXOffset =
+    parseInt(document.getElementById("stempelXOffset").value) || 0;
+  let stempelYOffset =
+    parseInt(document.getElementById("stempelYOffset").value) || -40;
+  let ttdXOffset = parseInt(document.getElementById("ttdXOffset").value) || 0;
+  let ttdYOffset =
+    parseInt(document.getElementById("ttdYOffset").value) || -120;
+
+  stempelXOffset = Math.max(Math.min(stempelXOffset, 50), -50);
+  stempelYOffset = Math.max(Math.min(stempelYOffset, 50), -50);
+  ttdXOffset = Math.max(Math.min(ttdXOffset, 50), -50);
+  ttdYOffset = Math.max(Math.min(ttdYOffset, 140), -140);
 
   // Get input values
   const cityName = document.getElementById("cityName").value;
@@ -61,15 +96,19 @@ async function generatePDF() {
         style: "tableExample",
         table: {
           widths: [100, "*", 100],
+          heights: [60, 30, 10], // Menentukan tinggi setiap baris
+
           body: [
             [
               {
                 image: "logo",
                 width: 60,
+                height: 70, // Tentukan tinggi tetap
                 alignment: "center",
+                fit: [60, 70], // Pastikan gambar fit dalam dimensi yang ditentukan
               },
               {
-                text: "PEMERINTAH KOTA MAKASSAR \n DINAS KESEHATAN \n PUSKESMAS ANTANG",
+                text: `PEMERINTAH ${cityName} \n DINAS KESEHATAN \n ${puskesmasName}`,
                 alignment: "center",
                 style: "header",
               },
@@ -77,15 +116,15 @@ async function generatePDF() {
                 image: "pkm",
                 width: 50,
                 alignment: "center",
-                margin: [0, 10, 0, 0],
+                margin: [0, 0, 0, 0],
               },
             ],
             [
               { text: "", alignment: "center" },
               {
-                text: "Jl. Antang Raya No.43, Antang, Kec. Manggala, Kota Makassar,  Sulawesi Selatan 90234 \n Telp : 0821-8880-3291",
+                text: `${address} \n Telepon : ${phone}`,
                 alignment: "center",
-                margin: [0, -25, 0, 0],
+                margin: [0, -10, 0, 0], // Sesuaikan margin atas
               },
               { text: "", alignment: "center" },
             ],
@@ -109,7 +148,7 @@ async function generatePDF() {
             lineWidth: 1,
           },
         ],
-        margin: [0, 1, 0, 10],
+        margin: [0, -10, 0, 10],
       },
       {
         text: "SURAT KETERANGAN SAKIT",
@@ -117,7 +156,7 @@ async function generatePDF() {
         alignment: "center",
       },
       {
-        text: `No.133.023/7030/PKM-ATG/VI/2025 `,
+        text: `No.${letterNumber} `,
         alignment: "center",
         margin: [0, -5, 0, 15],
       },
@@ -132,27 +171,27 @@ async function generatePDF() {
           body: [
             [
               { text: "Nama", margin: [40, 3, 0, 0] },
-              { text: `: Muhammad Akbar`, margin: [0, 3, 0, 0] },
+              { text: `: ${patientName}`, margin: [0, 3, 0, 0] },
             ],
             [
               { text: "Umur", margin: [40, 3, 0, 0] },
-              { text: `: 25 Tahun`, margin: [0, 3, 0, 0] },
+              { text: `: ${age} Tahun`, margin: [0, 3, 0, 0] },
             ],
             [
               { text: "Jenis Kelamin", margin: [40, 3, 0, 0] },
-              { text: `: Laki-Laki`, margin: [0, 3, 0, 0] },
+              { text: `: ${gender}`, margin: [0, 3, 0, 0] },
             ],
             [
               { text: "Alamat", margin: [40, 3, 0, 0] },
-              { text: `: Moncongloe `, margin: [0, 3, 0, 0] },
+              { text: `: ${patientAddress}`, margin: [0, 3, 0, 0] },
             ],
             [
               { text: "Pekerjaan", margin: [40, 3, 0, 0] },
-              { text: `: Karyawan Swasta`, margin: [0, 3, 0, 0] },
+              { text: `: ${occupation}`, margin: [0, 3, 0, 0] },
             ],
             [
               { text: "Diagnosa", margin: [40, 3, 0, 0] },
-              { text: `: Febris`, margin: [0, 3, 0, 0] },
+              { text: `: ${diagnosis}`, margin: [0, 3, 0, 0] },
             ],
           ],
         },
@@ -163,7 +202,7 @@ async function generatePDF() {
         margin: [0, 10, 0, 5],
       },
       {
-        text: `istirahat selama 2 hari, mulai tanggal 07 Juni s/d 08 Juni 2025`,
+        text: `istirahat selama ${sickDays} hari, mulai tanggal ${formattedStartDate} s/d ${formattedEndDate}.`,
         margin: [0, 0, 0, 15],
       },
       {
@@ -178,7 +217,7 @@ async function generatePDF() {
               { text: "" },
               { text: "" },
               {
-                text: `Makassar, 09 Juni 2025 \n  Dokter Pemeriksa,`,
+                text: `${cityName}, ${formattedLetterDate} \n  Dokter Pemeriksa,`,
                 alignment: "center",
               },
             ],
@@ -189,8 +228,7 @@ async function generatePDF() {
                 image: "stempel",
                 width: 150,
                 alignment: "center",
-                margin: [0, -40, 0, 0],
-                // opacity: 0.5,
+                margin: [stempelXOffset, stempelYOffset, 0, 0], // Terapkan offset di sini
               },
             ],
             [
@@ -200,19 +238,17 @@ async function generatePDF() {
                 image: "ttd",
                 width: 150,
                 alignment: "center",
-                margin: [0, -110, 0, 0],
-                // opacity: 0.5,
+                margin: [ttdXOffset, ttdYOffset, 0, 0], // Terapkan offset di sini
               },
             ],
-            // [{ text: "\n" }, { text: "" }, { text: "" }],
             [{ text: "\n" }, { text: "" }, { text: "" }],
             [
               { text: "" },
               { text: "" },
               {
+                absolutePosition: { x: 360, y: 550 }, // Sesuaikan x dan y sesuai kebutuhan (x: 400 untuk tengah kanan, y: 700 untuk posisi bawah)
                 text: `dr Kusuma`,
                 alignment: "center",
-                margin: [0, -70, 0, 0],
               },
             ],
           ],
