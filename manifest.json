@@ -1,0 +1,22 @@
+{
+    "name": "Aplikasi Buat PDF",
+    "short_name": "Buat PDF",
+    "start_url": ".",
+    "display": "standalone",  
+    "background_color": "#ffffff",
+    "theme_color": "#4CAF50",  
+    "icons": [
+      {
+        "src": "maros.png", 
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "icon.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ]
+  }
