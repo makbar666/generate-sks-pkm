@@ -195,11 +195,37 @@
             class="w-full p-2 border rounded-md"
           />
         </div>
+
+        <div class="mb-4">
+          <label for="namattd" class="block text-gray-700 mb-2"
+            >Nama Yang TTD Surat:</label
+          >
+          <input
+            type="text"
+            id="namaTtd"
+            name="namaTtd"
+            class="w-full p-2 border rounded-md"
+          />
+        </div>
       </div>
 
       <!-- Tambahkan input file untuk upload gambar -->
       <div class="grid space-y-2">
         <h1 class="font-semibold">Upload Gambar</h1>
+
+        <div class="mb-4">
+          <label for="logoPuskesmas" class="block text-gray-700 mb-2"
+            >Logo Puskesmas:</label
+          >
+          <input
+            type="file"
+            id="logoPuskesmas"
+            accept="image/*"
+            class="w-full p-2 border rounded-md"
+            onchange="handleImageUpload(this, 'pkmPreview')"
+          />
+          <img id="pkmPreview" class="mt-2 h-20" />
+        </div>
 
         <div class="mb-4">
           <label for="logoUpload" class="block text-gray-700 mb-2"

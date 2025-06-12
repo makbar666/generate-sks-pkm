@@ -40,7 +40,8 @@ async function generatePDF() {
   const logoBase64 =
     document.getElementById("logoPreview").src ||
     (await getBase64FromImageUrl("/maros.png"));
-  const logoPkm = await getBase64FromImageUrl("/logo-puskesmas.png");
+  const logoPkm =
+    document.getElementById("pkmPreview").src || "./logo-puskesmas.png";
   const stempel =
     document.getElementById("stempelPreview").src ||
     (await getBase64FromImageUrl("/stempel.png"));
@@ -77,6 +78,7 @@ async function generatePDF() {
   const sickDays = document.getElementById("sickDays").value;
   const letterDate = document.getElementById("letterDate").value;
   const letterNumber = document.getElementById("letterNumber").value;
+  const namaTtd = document.getElementById("namaTtd").value;
 
   // Format dates
   const formattedStartDate = new Date(startDate).toLocaleDateString("id-ID");
@@ -236,8 +238,12 @@ async function generatePDF() {
               { text: "" },
               {
                 image: "ttd",
-                width: 150,
+                width: 130,
+                height: 130,
+                fit: [130, 130],
+                opacity: 0.9,
                 alignment: "center",
+
                 margin: [ttdXOffset, ttdYOffset, 0, 0], // Terapkan offset di sini
               },
             ],
@@ -247,7 +253,7 @@ async function generatePDF() {
               { text: "" },
               {
                 absolutePosition: { x: 360, y: 550 }, // Sesuaikan x dan y sesuai kebutuhan (x: 400 untuk tengah kanan, y: 700 untuk posisi bawah)
-                text: `dr Kusuma`,
+                text: `dr ${namaTtd}`,
                 alignment: "center",
               },
             ],
