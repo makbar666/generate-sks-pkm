@@ -39,15 +39,15 @@ function resetOffset() {
 async function generatePDF() {
   const logoBase64 =
     document.getElementById("logoPreview").src ||
-    (await getBase64FromImageUrl("/maros.png"));
+    (await getBase64FromImageUrl("maros.png"));
   const logoPkm =
-    document.getElementById("pkmPreview").src || "./logo-puskesmas.png";
+    document.getElementById("pkmPreview").src || "logo-puskesmas.png";
   const stempel =
     document.getElementById("stempelPreview").src ||
-    (await getBase64FromImageUrl("/stempel.png"));
+    (await getBase64FromImageUrl("stempel.png"));
   const ttd =
     document.getElementById("ttdPreview").src ||
-    (await getBase64FromImageUrl("/ttd.png"));
+    (await getBase64FromImageUrl("ttd.png"));
 
   let stempelXOffset =
     parseInt(document.getElementById("stempelXOffset").value) || 0;
