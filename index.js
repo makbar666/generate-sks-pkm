@@ -38,8 +38,8 @@ function resetOffset() {
 
 async function generatePDF() {
   // Check if pdfMake is loaded
-  if (typeof pdfMake === 'undefined') {
-    alert('pdfMake library belum dimuat. Silakan refresh halaman.');
+  if (typeof pdfMake === 'undefined' || !window.pdfMakeReady) {
+    alert('pdfMake library belum dimuat. Silakan tunggu beberapa detik dan coba lagi.');
     return;
   }
   const logoBase64 =
