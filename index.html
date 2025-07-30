@@ -349,8 +349,16 @@
       ></iframe>
     </div>
 
-    <script src="index.js"></script>
     <script>
+      // Setup pdfMake after scripts loaded
+      window.onload = function() {
+        if (typeof pdfMake !== 'undefined' && pdfMake.vfs) {
+          console.log('pdfMake loaded successfully');
+        } else {
+          console.error('pdfMake not loaded properly');
+        }
+      };
+      
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
           .register("service-worker.js")
@@ -358,5 +366,6 @@
           .catch((error) => console.error("Error:", error));
       }
     </script>
+    <script src="index.js"></script>
   </body>
 </html>

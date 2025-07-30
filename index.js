@@ -37,6 +37,11 @@ function resetOffset() {
 }
 
 async function generatePDF() {
+  // Check if pdfMake is loaded
+  if (typeof pdfMake === 'undefined') {
+    alert('pdfMake library belum dimuat. Silakan refresh halaman.');
+    return;
+  }
   const logoBase64 =
     document.getElementById("logoPreview").src ||
     (await getBase64FromImageUrl("maros.png"));
