@@ -1,11 +1,10 @@
-const CACHE_NAME = "pdf-app-cache-v1"; // Nama cache, ganti jika update
+const CACHE_NAME = "pdf-app-cache-v2"; // Nama cache, ganti jika update
 const urlsToCache = [
   "/", // Halaman utama
   "/index.html",
-  "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js", // Library pdfmake
-  "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js", // Fonts pdfmake
-  "https://cdn.tailwindcss.com", // Tailwind CSS
-  // Tambahkan lebih banyak URL jika diperlukan, seperti index.js
+  "/index.js",
+  "/manifest.json"
+  // Removed external CDN URLs to avoid CSP issues
 ];
 
 self.addEventListener("install", (event) => {
